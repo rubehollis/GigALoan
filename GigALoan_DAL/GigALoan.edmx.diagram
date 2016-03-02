@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fa796a69c3bf4eab98dca7eaec9dfee4" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_42039_gigaloanModel.CHLD_StudentLoans" Width="1.5" PointX="7.5" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigaloanModel.CHLD_StudentReferences" Width="1.5" PointX="5.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigaloanModel.CORE_Clients" Width="1.5" PointX="6" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigaloanModel.CORE_GigAlerts" Width="1.5" PointX="8.25" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigaloanModel.CORE_Gigs" Width="1.5" PointX="10.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigaloanModel.CORE_Students" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigaloanModel.SPRT_Colleges" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigaloanModel.SPRT_GigCategories" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigaloanModel.SPRT_GigTypes" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigaloanModel.SPRT_LoanCompanies" Width="1.5" PointX="5.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigaloanModel.SPRT_Majors" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigaloanModel.sysdiagram" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="DB_42039_gigaloanModel.FK_CHLD_StudentLoans_CompanyID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigaloanModel.FK_CHLD_StudentLoans_StudentID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigaloanModel.FK_CHLD_StudentReferences_StudentID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigaloanModel.FK_CHLD_StudentReferences_TypeID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigaloanModel.FK_CORE_GigAlerts_ClientID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigaloanModel.FK_CORE_GigAlerts_TypeID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigaloanModel.FK_CORE_Gigs_AlertID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigaloanModel.FK_CORE_Gigs_StudentID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigaloanModel.FK_CORE_Students_CollegeID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigaloanModel.FK_CORE_Students_MajorID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigaloanModel.FK_SPRT_GigTypes_CategoryID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigaloanModel.CHLD_StudentSkills" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
