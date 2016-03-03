@@ -7,6 +7,8 @@ using GigALoanModel;
 using GigALoan_DAL;
 // Hello, my name is Ryan
 // And this is Alyssa
+
+    // FORK CHANGE
 namespace GigALoanConsole
 {
     class Program
