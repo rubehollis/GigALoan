@@ -8,6 +8,9 @@ using GigALoan_DAL;
 // Hello, my name is Ryan
 // And this is Alyssa\//my name is not nick
 
+    //FORK CHANGE by GigALoanTest
+    //demonstrating forking, cloning, changing, 
+    //committing, pushing, and merge/pull requests
 
     // FORK CHANGE
 
