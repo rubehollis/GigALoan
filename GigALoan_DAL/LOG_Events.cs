@@ -12,15 +12,10 @@ namespace GigALoan_DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class CHLD_StudentLoans
+    public partial class LOG_Events
     {
-        public int LoanID { get; set; }
-        public int StudentID { get; set; }
-        public int CompanyID { get; set; }
-        public Nullable<double> LoanAmount { get; set; }
-        public string AccountNum { get; set; }
-    
-        public virtual SPRT_LoanCompanies SPRT_LoanCompanies { get; set; }
-        public virtual CORE_Students CORE_Students { get; set; }
+        public int LogID { get; set; }
+        public Nullable<System.DateTime> DateLogged { get; set; }
+        public string LogMessage { get; set; }
     }
 }

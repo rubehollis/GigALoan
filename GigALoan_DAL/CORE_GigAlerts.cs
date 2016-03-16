@@ -28,6 +28,7 @@ namespace GigALoan_DAL
         public double Long { get; set; }
         public double Lat { get; set; }
         public System.DateTime DateCreated { get; set; }
+        public bool Active { get; set; }
     
         public virtual CORE_Clients CORE_Clients { get; set; }
         public virtual SPRT_GigTypes SPRT_GigTypes { get; set; }

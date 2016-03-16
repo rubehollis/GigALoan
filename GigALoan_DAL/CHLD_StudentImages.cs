@@ -12,12 +12,14 @@ namespace GigALoan_DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class CHLD_StudentImages
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int ImageID { get; set; }
+        public int StudentID { get; set; }
+        public string ImageURL { get; set; }
+        public string ImageUUID { get; set; }
+        public string ImageName { get; set; }
+    
+        public virtual CORE_Students CORE_Students { get; set; }
     }
 }

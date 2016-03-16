@@ -14,10 +14,14 @@ namespace GigALoan_DAL
     
     public partial class CORE_Gigs
     {
+        public CORE_Gigs()
+        {
+            this.CHLD_GigImages = new HashSet<CHLD_GigImages>();
+        }
+    
         public int GigID { get; set; }
         public int StudentID { get; set; }
         public int AlertID { get; set; }
-        public string GigJob { get; set; }
         public System.DateTime DateAccepted { get; set; }
         public Nullable<System.DateTime> DateClosed { get; set; }
         public Nullable<double> StudentRating { get; set; }
@@ -25,6 +29,7 @@ namespace GigALoan_DAL
         public string StudentComments { get; set; }
         public string ClientComments { get; set; }
     
+        public virtual ICollection<CHLD_GigImages> CHLD_GigImages { get; set; }
         public virtual CORE_GigAlerts CORE_GigAlerts { get; set; }
         public virtual CORE_Students CORE_Students { get; set; }
     }

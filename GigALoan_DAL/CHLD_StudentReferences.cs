@@ -17,6 +17,7 @@ namespace GigALoan_DAL
         public int RefID { get; set; }
         public Nullable<int> StudentID { get; set; }
         public Nullable<int> TypeID { get; set; }
+        public System.DateTimeOffset DateAdded { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

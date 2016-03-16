@@ -1,0 +1,165 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ include file="T4StdLib.txt" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="Microsoft.VisualStudio.TextTemplating.Interfaces.10.0" #>
+<#@ assembly name="Microsoft.CSharp" #>
+<#@ assembly name="EnvDTE" #>
+<#@ assembly name="EnvDTE100" #>
+<#@ import namespace="EnvDTE" #>
+<#@ import namespace="EnvDTE100" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #><#+
+ 
+public void GenerateForm(string projectname, string inputFilePath, int rowLimit, bool vertical)
+{
+    var serviceProvider = (IServiceProvider)Host;
+    var VisualStudio = serviceProvider.GetService(typeof(EnvDTE.DTE)) as DTE;
+    DTEVSHelper helper = new DTEVSHelper();
+    Project entProject = helper.GetProject(VisualStudio.Solution, projectname);
+    ProjectItem item = helper.GetProjectItem(entProject, SplitPathString(inputFilePath));
+    CodeClass inputClass = helper.GetAllCodeElements<CodeClass>(item.FileCodeModel.CodeElements.Cast<CodeElement>(), vsCMElement.vsCMElementClass).FirstOrDefault();
+    List<CodeProperty> properties = helper.GetAllCodeElements<CodeProperty>(inputClass.Children.Cast<CodeElement>(), vsCMElement.vsCMElementProperty).ToList();
+
+    if (rowLimit < 1)
+       rowLimit = 1;
+
+    if (rowLimit > properties.Count)
+        rowLimit = properties.Count;
+
+    int maxRowNum = rowLimit;
+    int maxColumnNum = (int)Math.Ceiling((double)properties.Count/(double)rowLimit);
+
+    if (vertical)
+        maxRowNum *=2;
+
+    BeginGrid(inputClass.Name);
+    BeginGridColumnDefinitions();
+    for (int i = 0; i < maxColumnNum; i++)
+    {
+        if (vertical)
+        {
+            ColumnDefinition("*");
+        }
+        else
+        {
+            ColumnDefinition("Auto");
+            ColumnDefinition("*");
+        }
+    }
+    EndGridColumnDefinitions();
+    BeginGridRowDefinitions();
+    for (int i = 0; i < maxRowNum; i++)
+        RowDefinition("35");
+    EndGridRowDefinitions();
+
+    int rowCount = 0;
+    int colCount = 0;
+    foreach (CodeProperty prop in properties)
+    {
+        if (vertical)
+        {
+            TextBlockTexBoxPair(prop.Name, colCount, colCount, rowCount, rowCount + 1, vertical);
+            rowCount +=2;
+        }
+        else
+        {
+            TextBlockTexBoxPair(prop.Name, colCount, colCount + 1, rowCount, rowCount, vertical);
+            rowCount++;
+        }
+        
+        if (rowCount >= maxRowNum)
+        {
+            rowCount = 0;
+            if (vertical)
+                colCount++;
+            else
+                colCount +=2;
+        }
+    }
+    EndGrid();
+}
+
+public void BeginGrid(string className)
+{
+    
+#>
+<Grid x:Name="grd_<#=className#>">
+<#+
+    PushIndent("  ");
+}
+
+public void EndGrid()
+{
+    PopIndent();
+#>
+</Grid>
+<#+
+}
+
+public void BeginGridColumnDefinitions()
+{
+#>
+<Grid.ColumnDefinitions>
+<#+
+    PushIndent("  ");
+}
+
+public void EndGridColumnDefinitions()
+{
+    PopIndent();
+#>
+</Grid.ColumnDefinitions>
+<#+
+}
+
+public void ColumnDefinition(string width)
+{
+#>
+<ColumnDefinition Width="<#=width#>"/>
+<#+
+}
+
+public void BeginGridRowDefinitions()
+{
+#>
+<Grid.RowDefinitions>
+<#+
+    PushIndent("  ");
+}
+
+public void EndGridRowDefinitions()
+{
+    PopIndent();
+#>
+</Grid.RowDefinitions>
+<#+
+}
+
+public void RowDefinition(string height)
+{
+#>
+<RowDefinition Height="<#=height#>"/>
+<#+
+}
+
+public void TextBlockTexBoxPair(string name, int column1, int column2, int row1, int row2, bool vertical)
+{
+#>
+<TextBlock x:Name="txblk_<#=name#>"
+            Grid.Column="<#=column1#>"
+            Grid.Row="<#=row1#>"
+            Margin="5"
+            Text="<#=name#>"
+            <#+ if (vertical) {#>VerticalAlignment="Bottom"<#+} else {#>HorizontalAlignment="Right"<#+}#>/>
+<TextBox x:Name="txbx_<#=name#>"
+            Grid.Column="<#=column2#>"
+            Grid.Row="<#=row2#>"
+            Margin="5"
+            Text="{Binding <#=name#>}"/>
+<#+
+}
+
+
+#>

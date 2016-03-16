@@ -16,6 +16,7 @@ namespace GigALoan_DAL
     {
         public CORE_Clients()
         {
+            this.CHLD_ClientImages = new HashSet<CHLD_ClientImages>();
             this.CORE_GigAlerts = new HashSet<CORE_GigAlerts>();
         }
     
@@ -29,6 +30,7 @@ namespace GigALoan_DAL
         public string PhoneNumber { get; set; }
         public Nullable<bool> Active { get; set; }
     
+        public virtual ICollection<CHLD_ClientImages> CHLD_ClientImages { get; set; }
         public virtual ICollection<CORE_GigAlerts> CORE_GigAlerts { get; set; }
     }
 }

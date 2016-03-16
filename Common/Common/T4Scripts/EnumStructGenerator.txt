@@ -1,0 +1,208 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ include file="EF6.Utility.CS.ttinclude"#>
+<#@ include file="C:\Projects\Common\T4Scripts\T4StdLib.txt" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.Linq" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Xml.Serialization" #>
+<#@ assembly name="Microsoft.VisualStudio.TextTemplating.Interfaces.10.0" #>
+<#@ assembly name="Microsoft.CSharp" #>
+<#@ assembly name="EnvDTE" #>
+<#@ assembly name="EnvDTE100" #>
+<#@ import namespace="EnvDTE" #>
+<#@ import namespace="EnvDTE100" #><#+
+
+public void GenerateEnumStructs(string projectName, string enumXMLFilePath)
+{
+    CodeGenerationTools code = new CodeGenerationTools(this);
+    string enumNamespace = code.VsNamespaceSuggestion();
+    var serviceProvider = (IServiceProvider)Host;
+    var VisualStudio = serviceProvider.GetService(typeof(EnvDTE.DTE)) as DTE;
+    var helper = new DTEVSHelper();
+    var entProject = helper.GetProject(VisualStudio.Solution, projectName);
+    int endIndex = entProject.FullName.LastIndexOf('\\');
+    string inputFile = entProject.FullName.Substring(0, endIndex + 1) + enumXMLFilePath;
+
+
+    var ser = new XmlSerializer(typeof(EnumConfig));
+    var document = (EnumConfig)ser.Deserialize(new FileStream(inputFile, FileMode.Open));
+    List<List<string>> rowsDictionary = new List<List<string>>();
+    Regex regex = new Regex(@"^\d+|[^\w\d]");    
+
+    Header();
+    NewLine();
+    BeginNamespace(enumNamespace);
+    BeginBracket();
+    BeginRegion("Base");
+    EnumBassClass();
+    EndRegion("Base");
+    WriteLine("");
+    BeginRegion("Enum Classes");
+    using (var conn = new SqlConnection(document.ConnectionString))
+    {
+        conn.Open();
+        foreach (EnumClass item in document.EnumClasses)
+        {
+            string query = string.Format("SELECT {0}, {1} FROM {2} {3}", 
+                item.ColumnForEnumMemberName, 
+                item.ColumnForEnumMemberValue, 
+                item.DataBaseTableName,
+                item.QueryCondition == null? string.Empty : item.QueryCondition);
+
+            using(var cmd = new SqlCommand(query, conn))
+            using(var rd  = cmd.ExecuteReader())
+            {
+                StructDelcaration(item.EnumClassName);
+                BeginBracket();
+                Constructor(item.EnumClassName);
+                BeginRegion("Members");
+                while (rd.Read())
+                {
+                    var pair = new List<string>();
+                    pair.Add(rd[0].ToString());
+                    pair.Add(rd[1].ToString());
+                    rowsDictionary.Add(pair);
+                }
+
+                foreach (List<string> MemberNameAndValue in rowsDictionary)
+                {
+                    string memberName = regex.Replace(MakeCamelCase(MemberNameAndValue[0]),"");
+                    string value = MemberNameAndValue[1];
+                    BeginRegion(memberName + " = " + value);
+                    EnumMember(item.EnumClassName, memberName, value);
+                    EndRegion(memberName);
+                }
+                rowsDictionary.Clear();
+                EndRegion("Members");
+                EndBracket();
+            }
+        }
+    }
+    EndRegion("Enum Classes");
+    EndBracket();
+}
+
+public void BeginNamespace(string namespaceText)
+{
+
+#>
+using System;
+namespace <#=namespaceText#>
+<#+
+}
+
+public void EnumBassClass()
+{
+#>
+public class EnumBase
+{
+    private dynamic _value;
+
+    public EnumBase(object value)
+    {
+        _value = value;
+    }
+
+    public static implicit operator int(EnumBase x)
+    {
+        return int.Parse(x._value);
+    }
+
+    public static implicit operator long(EnumBase x)
+    {
+        return long.Parse(x._value);
+    }
+
+    public static implicit operator double(EnumBase x)
+    {
+        return double.Parse(x._value);
+    }
+
+    public static implicit operator string(EnumBase x)
+    {
+        return x.ToString();
+    }
+
+    public static implicit operator DateTime(EnumBase x)
+    {
+        return Convert.ToDateTime(x.ToString());
+    }
+}
+<#+
+}
+
+public void StructDelcaration(string enumClassName)
+{
+
+#>
+public class <#=enumClassName#> : EnumBase
+<#+
+}
+
+public void Constructor(string enumClassName)
+{
+#>
+public <#=enumClassName#>(object value) : base(value) {}
+<#+
+}
+
+public void EnumMember(string enumClassName, string memberName, string Value)
+{
+
+#>
+private static <#=enumClassName#> _<#=memberName#> = null;
+public static <#=enumClassName#> <#=memberName#>
+{
+    get
+    {
+        if (_<#=memberName#> == null)
+            _<#=memberName#> = new <#=enumClassName#>("<#=Value#>");
+        return _<#=memberName#>;
+    }
+}<#+
+WriteLine("");
+}
+
+public class EnumClass
+{
+    public string DataBaseTableName { get; set; }
+    public string ColumnForEnumMemberName { get; set; }
+    public string ColumnForEnumMemberValue { get; set; }
+    public string QueryCondition { get; set; }
+    private string _EnumCLassName;
+    public string EnumClassName
+    {
+        get
+        {
+            if (_EnumCLassName == null)
+            {
+                if (DataBaseTableName != null)
+                    return DataBaseTableName + "_LookUp";
+                return _EnumCLassName;
+            }
+            return _EnumCLassName;
+        }
+        set
+        {
+            _EnumCLassName = value;
+        }
+    }
+}
+
+[XmlRoot("EnumConfig", Namespace = "http://common.aldridgepite.com/T4Scripts/EnumConfig")]
+public class EnumConfig
+{
+    public string ConnectionString { get; set; }
+    public List<EnumClass> EnumClasses { get; set; }
+}
+
+
+#>

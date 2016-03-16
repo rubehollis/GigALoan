@@ -4,7 +4,37 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DB_42039_gigaloanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DB_42039_gigModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CHLD_ClientImages">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="ImageURL" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ImageUUID" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="ImageName" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CHLD_GigImages">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GigID" Type="int" Nullable="false" />
+          <Property Name="ImageURL" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ImageUUID" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="ImageName" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CHLD_StudentImages">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="ImageURL" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ImageUUID" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="ImageName" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
         <EntityType Name="CHLD_StudentLoans">
           <Key>
             <PropertyRef Name="LoanID" />
@@ -12,8 +42,8 @@
           <Property Name="LoanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StudentID" Type="int" Nullable="false" />
           <Property Name="CompanyID" Type="int" Nullable="false" />
-          <Property Name="LoanState" Type="char" MaxLength="2" />
           <Property Name="LoanAmount" Type="float" />
+          <Property Name="AccountNum" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <EntityType Name="CHLD_StudentReferences">
           <Key>
@@ -22,6 +52,7 @@
           <Property Name="RefID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StudentID" Type="int" />
           <Property Name="TypeID" Type="int" />
+          <Property Name="DateAdded" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="100" />
@@ -42,7 +73,7 @@
           <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="DateJoined" Type="date" Nullable="false" />
+          <Property Name="DateJoined" Type="datetime" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Pass" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Gender" Type="char" MaxLength="1" />
@@ -61,7 +92,8 @@
           <Property Name="PaymentAmt" Type="float" Nullable="false" />
           <Property Name="Long" Type="float" Nullable="false" />
           <Property Name="Lat" Type="float" Nullable="false" />
-          <Property Name="DateCreated" Type="date" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CORE_Gigs">
           <Key>
@@ -70,9 +102,8 @@
           <Property Name="GigID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StudentID" Type="int" Nullable="false" />
           <Property Name="AlertID" Type="int" Nullable="false" />
-          <Property Name="GigJob" Type="varchar" MaxLength="250" />
-          <Property Name="DateAccepted" Type="date" Nullable="false" />
-          <Property Name="DateClosed" Type="date" />
+          <Property Name="DateAccepted" Type="datetime" Nullable="false" />
+          <Property Name="DateClosed" Type="datetime" />
           <Property Name="StudentRating" Type="float" />
           <Property Name="ClientRating" Type="float" />
           <Property Name="StudentComments" Type="varchar" MaxLength="250" />
@@ -85,7 +116,7 @@
           <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="DateJoined" Type="date" Nullable="false" />
+          <Property Name="DateJoined" Type="datetime" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Pass" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="MajorID" Type="int" Nullable="false" />
@@ -95,6 +126,14 @@
           <Property Name="Employer" Type="varchar" MaxLength="50" />
           <Property Name="PhoneNumber" Type="varchar" MaxLength="10" />
           <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="LOG_Events">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateLogged" Type="datetime" />
+          <Property Name="LogMessage" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="SPRT_Colleges">
           <Key>
@@ -124,6 +163,7 @@
           </Key>
           <Property Name="CompanyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CompanyName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="CompanyState" Type="char" MaxLength="2" Nullable="false" />
         </EntityType>
         <EntityType Name="SPRT_Majors">
           <Key>
@@ -131,16 +171,6 @@
           </Key>
           <Property Name="MajorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MajorName" Type="varchar" MaxLength="255" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <Association Name="FK_CHLD_StudentLoans_CompanyID">
           <End Role="SPRT_LoanCompanies" Type="Self.SPRT_LoanCompanies" Multiplicity="1" />
@@ -214,6 +244,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CORE_Clients_ClientID">
+          <End Role="CORE_Clients" Type="Self.CORE_Clients" Multiplicity="1" />
+          <End Role="CHLD_ClientImages" Type="Self.CHLD_ClientImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CORE_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="CHLD_ClientImages">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CORE_GigAlerts_ClientID">
           <End Role="CORE_Clients" Type="Self.CORE_Clients" Multiplicity="1" />
           <End Role="CORE_GigAlerts" Type="Self.CORE_GigAlerts" Multiplicity="*" />
@@ -247,6 +289,18 @@
             </Principal>
             <Dependent Role="CORE_Gigs">
               <PropertyRef Name="AlertID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CORE_Gigs_GigID">
+          <End Role="CORE_Gigs" Type="Self.CORE_Gigs" Multiplicity="1" />
+          <End Role="CHLD_GigImages" Type="Self.CHLD_GigImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CORE_Gigs">
+              <PropertyRef Name="GigID" />
+            </Principal>
+            <Dependent Role="CHLD_GigImages">
+              <PropertyRef Name="GigID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -286,6 +340,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CORE_Students_StudentID">
+          <End Role="CORE_Students" Type="Self.CORE_Students" Multiplicity="1" />
+          <End Role="CHLD_StudentImages" Type="Self.CHLD_StudentImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CORE_Students">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="CHLD_StudentImages">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SPRT_GigTypes_CategoryID">
           <End Role="SPRT_GigCategories" Type="Self.SPRT_GigCategories" Multiplicity="1" />
           <End Role="SPRT_GigTypes" Type="Self.SPRT_GigTypes" Multiplicity="*" />
@@ -298,7 +364,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="sp_AddGigAlert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="proc_AddClient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Pass" Type="varchar" Mode="In" />
+          <Parameter Name="Gender" Type="char" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="PROC_AddClientImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientID" Type="int" Mode="In" />
+          <Parameter Name="ImageURL" Type="varchar" Mode="In" />
+          <Parameter Name="ImageUUID" Type="varchar" Mode="In" />
+          <Parameter Name="ImageName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="proc_AddGigAlert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ClientID" Type="int" Mode="In" />
           <Parameter Name="TypeID" Type="int" Mode="In" />
           <Parameter Name="Title" Type="varchar" Mode="In" />
@@ -307,11 +387,85 @@
           <Parameter Name="Long" Type="float" Mode="In" />
           <Parameter Name="Lat" Type="float" Mode="In" />
         </Function>
-        <Function Name="sp_GetGigTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="sp_GetGigTypesByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="PROC_AddGigImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GigID" Type="int" Mode="In" />
+          <Parameter Name="ImageURL" Type="varchar" Mode="In" />
+          <Parameter Name="ImageUUID" Type="varchar" Mode="In" />
+          <Parameter Name="ImageName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="proc_AddStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Pass" Type="varchar" Mode="In" />
+          <Parameter Name="MajorID" Type="int" Mode="In" />
+          <Parameter Name="CollegeID" Type="int" Mode="In" />
+          <Parameter Name="Gender" Type="char" Mode="In" />
+          <Parameter Name="Employed" Type="bit" Mode="In" />
+          <Parameter Name="Employer" Type="varchar" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="PROC_AddStudentImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StudentID" Type="int" Mode="In" />
+          <Parameter Name="ImageURL" Type="varchar" Mode="In" />
+          <Parameter Name="ImageUUID" Type="varchar" Mode="In" />
+          <Parameter Name="ImageName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="PROC_GetClientImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientID" Type="int" Mode="In" />
+          <Parameter Name="ImageID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PROC_GetClientImages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="proc_GetColleges" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PROC_GetGigImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GigID" Type="int" Mode="In" />
+          <Parameter Name="ImageID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PROC_GetGigImages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GigID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="proc_GetGigTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="proc_GetGigTypesByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TypeID" Type="int" Mode="In" />
         </Function>
-        <EntityContainer Name="DB_42039_gigaloanModelStoreContainer">
+        <Function Name="proc_GetLoanCompanies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PROC_GetStudentImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StudentID" Type="int" Mode="In" />
+          <Parameter Name="ImageID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PROC_GetStudentImages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StudentID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="proc_UpdateClient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientID" Type="int" Mode="In" />
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Pass" Type="varchar" Mode="In" />
+          <Parameter Name="Gender" Type="char" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
+          <Parameter Name="Active" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="proc_UpdateStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StudentID" Type="int" Mode="In" />
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Pass" Type="varchar" Mode="In" />
+          <Parameter Name="MajorID" Type="int" Mode="In" />
+          <Parameter Name="CollegeID" Type="int" Mode="In" />
+          <Parameter Name="Gender" Type="char" Mode="In" />
+          <Parameter Name="Employed" Type="bit" Mode="In" />
+          <Parameter Name="Employer" Type="varchar" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
+          <Parameter Name="Active" Type="bit" Mode="In" />
+        </Function>
+        <EntityContainer Name="DB_42039_gigModelStoreContainer">
+          <EntitySet Name="CHLD_ClientImages" EntityType="Self.CHLD_ClientImages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CHLD_GigImages" EntityType="Self.CHLD_GigImages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CHLD_StudentImages" EntityType="Self.CHLD_StudentImages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHLD_StudentLoans" EntityType="Self.CHLD_StudentLoans" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHLD_StudentReferences" EntityType="Self.CHLD_StudentReferences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHLD_StudentSkills" EntityType="Self.CHLD_StudentSkills" Schema="dbo" store:Type="Tables" />
@@ -319,12 +473,12 @@
           <EntitySet Name="CORE_GigAlerts" EntityType="Self.CORE_GigAlerts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CORE_Gigs" EntityType="Self.CORE_Gigs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CORE_Students" EntityType="Self.CORE_Students" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOG_Events" EntityType="Self.LOG_Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SPRT_Colleges" EntityType="Self.SPRT_Colleges" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SPRT_GigCategories" EntityType="Self.SPRT_GigCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SPRT_GigTypes" EntityType="Self.SPRT_GigTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SPRT_LoanCompanies" EntityType="Self.SPRT_LoanCompanies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SPRT_Majors" EntityType="Self.SPRT_Majors" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CHLD_StudentLoans_CompanyID" Association="Self.FK_CHLD_StudentLoans_CompanyID">
             <End Role="SPRT_LoanCompanies" EntitySet="SPRT_LoanCompanies" />
             <End Role="CHLD_StudentLoans" EntitySet="CHLD_StudentLoans" />
@@ -349,6 +503,10 @@
             <End Role="CORE_Students" EntitySet="CORE_Students" />
             <End Role="CHLD_StudentSkills" EntitySet="CHLD_StudentSkills" />
           </AssociationSet>
+          <AssociationSet Name="FK_CORE_Clients_ClientID" Association="Self.FK_CORE_Clients_ClientID">
+            <End Role="CORE_Clients" EntitySet="CORE_Clients" />
+            <End Role="CHLD_ClientImages" EntitySet="CHLD_ClientImages" />
+          </AssociationSet>
           <AssociationSet Name="FK_CORE_GigAlerts_ClientID" Association="Self.FK_CORE_GigAlerts_ClientID">
             <End Role="CORE_Clients" EntitySet="CORE_Clients" />
             <End Role="CORE_GigAlerts" EntitySet="CORE_GigAlerts" />
@@ -360,6 +518,10 @@
           <AssociationSet Name="FK_CORE_Gigs_AlertID" Association="Self.FK_CORE_Gigs_AlertID">
             <End Role="CORE_GigAlerts" EntitySet="CORE_GigAlerts" />
             <End Role="CORE_Gigs" EntitySet="CORE_Gigs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CORE_Gigs_GigID" Association="Self.FK_CORE_Gigs_GigID">
+            <End Role="CORE_Gigs" EntitySet="CORE_Gigs" />
+            <End Role="CHLD_GigImages" EntitySet="CHLD_GigImages" />
           </AssociationSet>
           <AssociationSet Name="FK_CORE_Gigs_StudentID" Association="Self.FK_CORE_Gigs_StudentID">
             <End Role="CORE_Students" EntitySet="CORE_Students" />
@@ -373,6 +535,10 @@
             <End Role="SPRT_Majors" EntitySet="SPRT_Majors" />
             <End Role="CORE_Students" EntitySet="CORE_Students" />
           </AssociationSet>
+          <AssociationSet Name="FK_CORE_Students_StudentID" Association="Self.FK_CORE_Students_StudentID">
+            <End Role="CORE_Students" EntitySet="CORE_Students" />
+            <End Role="CHLD_StudentImages" EntitySet="CHLD_StudentImages" />
+          </AssociationSet>
           <AssociationSet Name="FK_SPRT_GigTypes_CategoryID" Association="Self.FK_SPRT_GigTypes_CategoryID">
             <End Role="SPRT_GigCategories" EntitySet="SPRT_GigCategories" />
             <End Role="SPRT_GigTypes" EntitySet="SPRT_GigTypes" />
@@ -382,7 +548,40 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DB_42039_gigaloanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="DB_42039_gigModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CHLD_ClientImages">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <Property Name="ImageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ImageUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CORE_Clients" Relationship="Self.FK_CORE_Clients_ClientID" FromRole="CHLD_ClientImages" ToRole="CORE_Clients" />
+        </EntityType>
+        <EntityType Name="CHLD_GigImages">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GigID" Type="Int32" Nullable="false" />
+          <Property Name="ImageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ImageUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CORE_Gigs" Relationship="Self.FK_CORE_Gigs_GigID" FromRole="CHLD_GigImages" ToRole="CORE_Gigs" />
+        </EntityType>
+        <EntityType Name="CHLD_StudentImages">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <Property Name="ImageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ImageUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CORE_Students" Relationship="Self.FK_CORE_Students_StudentID" FromRole="CHLD_StudentImages" ToRole="CORE_Students" />
+        </EntityType>
         <EntityType Name="CHLD_StudentLoans">
           <Key>
             <PropertyRef Name="LoanID" />
@@ -390,8 +589,8 @@
           <Property Name="LoanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StudentID" Type="Int32" Nullable="false" />
           <Property Name="CompanyID" Type="Int32" Nullable="false" />
-          <Property Name="LoanState" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="LoanAmount" Type="Double" />
+          <Property Name="AccountNum" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="SPRT_LoanCompanies" Relationship="Self.FK_CHLD_StudentLoans_CompanyID" FromRole="CHLD_StudentLoans" ToRole="SPRT_LoanCompanies" />
           <NavigationProperty Name="CORE_Students" Relationship="Self.FK_CHLD_StudentLoans_StudentID" FromRole="CHLD_StudentLoans" ToRole="CORE_Students" />
         </EntityType>
@@ -402,6 +601,7 @@
           <Property Name="RefID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StudentID" Type="Int32" />
           <Property Name="TypeID" Type="Int32" />
+          <Property Name="DateAdded" Type="DateTimeOffset" Nullable="false" Precision="7" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -416,12 +616,13 @@
           <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DateJoined" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateJoined" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Pass" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="CHLD_ClientImages" Relationship="Self.FK_CORE_Clients_ClientID" FromRole="CORE_Clients" ToRole="CHLD_ClientImages" />
           <NavigationProperty Name="CORE_GigAlerts" Relationship="Self.FK_CORE_GigAlerts_ClientID" FromRole="CORE_Clients" ToRole="CORE_GigAlerts" />
         </EntityType>
         <EntityType Name="CORE_GigAlerts">
@@ -436,7 +637,8 @@
           <Property Name="PaymentAmt" Type="Double" Nullable="false" />
           <Property Name="Long" Type="Double" Nullable="false" />
           <Property Name="Lat" Type="Double" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CORE_Clients" Relationship="Self.FK_CORE_GigAlerts_ClientID" FromRole="CORE_GigAlerts" ToRole="CORE_Clients" />
           <NavigationProperty Name="SPRT_GigTypes" Relationship="Self.FK_CORE_GigAlerts_TypeID" FromRole="CORE_GigAlerts" ToRole="SPRT_GigTypes" />
           <NavigationProperty Name="CORE_Gigs" Relationship="Self.FK_CORE_Gigs_AlertID" FromRole="CORE_GigAlerts" ToRole="CORE_Gigs" />
@@ -448,13 +650,13 @@
           <Property Name="GigID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StudentID" Type="Int32" Nullable="false" />
           <Property Name="AlertID" Type="Int32" Nullable="false" />
-          <Property Name="GigJob" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="DateAccepted" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DateClosed" Type="DateTime" Precision="0" />
+          <Property Name="DateAccepted" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateClosed" Type="DateTime" Precision="3" />
           <Property Name="StudentRating" Type="Double" />
           <Property Name="ClientRating" Type="Double" />
           <Property Name="StudentComments" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="ClientComments" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CHLD_GigImages" Relationship="Self.FK_CORE_Gigs_GigID" FromRole="CORE_Gigs" ToRole="CHLD_GigImages" />
           <NavigationProperty Name="CORE_GigAlerts" Relationship="Self.FK_CORE_Gigs_AlertID" FromRole="CORE_Gigs" ToRole="CORE_GigAlerts" />
           <NavigationProperty Name="CORE_Students" Relationship="Self.FK_CORE_Gigs_StudentID" FromRole="CORE_Gigs" ToRole="CORE_Students" />
         </EntityType>
@@ -465,7 +667,7 @@
           <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DateJoined" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateJoined" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Pass" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MajorID" Type="Int32" Nullable="false" />
@@ -475,12 +677,21 @@
           <Property Name="Employer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="CHLD_StudentImages" Relationship="Self.FK_CORE_Students_StudentID" FromRole="CORE_Students" ToRole="CHLD_StudentImages" />
           <NavigationProperty Name="CHLD_StudentLoans" Relationship="Self.FK_CHLD_StudentLoans_StudentID" FromRole="CORE_Students" ToRole="CHLD_StudentLoans" />
           <NavigationProperty Name="CHLD_StudentReferences" Relationship="Self.FK_CHLD_StudentReferences_StudentID" FromRole="CORE_Students" ToRole="CHLD_StudentReferences" />
           <NavigationProperty Name="CORE_Gigs" Relationship="Self.FK_CORE_Gigs_StudentID" FromRole="CORE_Students" ToRole="CORE_Gigs" />
           <NavigationProperty Name="SPRT_Colleges" Relationship="Self.FK_CORE_Students_CollegeID" FromRole="CORE_Students" ToRole="SPRT_Colleges" />
           <NavigationProperty Name="SPRT_Majors" Relationship="Self.FK_CORE_Students_MajorID" FromRole="CORE_Students" ToRole="SPRT_Majors" />
           <NavigationProperty Name="SPRT_GigTypes" Relationship="Self.CHLD_StudentSkills" FromRole="CORE_Students" ToRole="SPRT_GigTypes" />
+        </EntityType>
+        <EntityType Name="LOG_Events">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateLogged" Type="DateTime" Precision="3" />
+          <Property Name="LogMessage" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SPRT_Colleges">
           <Key>
@@ -516,6 +727,7 @@
           </Key>
           <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CompanyName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CompanyState" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="CHLD_StudentLoans" Relationship="Self.FK_CHLD_StudentLoans_CompanyID" FromRole="SPRT_LoanCompanies" ToRole="CHLD_StudentLoans" />
         </EntityType>
         <EntityType Name="SPRT_Majors">
@@ -526,16 +738,42 @@
           <Property Name="MajorName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CORE_Students" Relationship="Self.FK_CORE_Students_MajorID" FromRole="SPRT_Majors" ToRole="CORE_Students" />
         </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
+        <Association Name="FK_CORE_Clients_ClientID">
+          <End Role="CORE_Clients" Type="Self.CORE_Clients" Multiplicity="1" />
+          <End Role="CHLD_ClientImages" Type="Self.CHLD_ClientImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CORE_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="CHLD_ClientImages">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CORE_Gigs_GigID">
+          <End Role="CORE_Gigs" Type="Self.CORE_Gigs" Multiplicity="1" />
+          <End Role="CHLD_GigImages" Type="Self.CHLD_GigImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CORE_Gigs">
+              <PropertyRef Name="GigID" />
+            </Principal>
+            <Dependent Role="CHLD_GigImages">
+              <PropertyRef Name="GigID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CORE_Students_StudentID">
+          <End Role="CORE_Students" Type="Self.CORE_Students" Multiplicity="1" />
+          <End Role="CHLD_StudentImages" Type="Self.CHLD_StudentImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CORE_Students">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="CHLD_StudentImages">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CHLD_StudentLoans_CompanyID">
           <End Role="SPRT_LoanCompanies" Type="Self.SPRT_LoanCompanies" Multiplicity="1" />
           <End Role="CHLD_StudentLoans" Type="Self.CHLD_StudentLoans" Multiplicity="*" />
@@ -672,19 +910,34 @@
           <End Role="SPRT_GigTypes" Type="Self.SPRT_GigTypes" Multiplicity="*" />
           <End Role="CORE_Students" Type="Self.CORE_Students" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="DB_42039_gigaloanEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DB_42039_gigEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CHLD_ClientImages" EntityType="Self.CHLD_ClientImages" />
+          <EntitySet Name="CHLD_GigImages" EntityType="Self.CHLD_GigImages" />
+          <EntitySet Name="CHLD_StudentImages" EntityType="Self.CHLD_StudentImages" />
           <EntitySet Name="CHLD_StudentLoans" EntityType="Self.CHLD_StudentLoans" />
           <EntitySet Name="CHLD_StudentReferences" EntityType="Self.CHLD_StudentReferences" />
           <EntitySet Name="CORE_Clients" EntityType="Self.CORE_Clients" />
           <EntitySet Name="CORE_GigAlerts" EntityType="Self.CORE_GigAlerts" />
           <EntitySet Name="CORE_Gigs" EntityType="Self.CORE_Gigs" />
           <EntitySet Name="CORE_Students" EntityType="Self.CORE_Students" />
+          <EntitySet Name="LOG_Events" EntityType="Self.LOG_Events" />
           <EntitySet Name="SPRT_Colleges" EntityType="Self.SPRT_Colleges" />
           <EntitySet Name="SPRT_GigCategories" EntityType="Self.SPRT_GigCategories" />
           <EntitySet Name="SPRT_GigTypes" EntityType="Self.SPRT_GigTypes" />
           <EntitySet Name="SPRT_LoanCompanies" EntityType="Self.SPRT_LoanCompanies" />
           <EntitySet Name="SPRT_Majors" EntityType="Self.SPRT_Majors" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_CORE_Clients_ClientID" Association="Self.FK_CORE_Clients_ClientID">
+            <End Role="CORE_Clients" EntitySet="CORE_Clients" />
+            <End Role="CHLD_ClientImages" EntitySet="CHLD_ClientImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CORE_Gigs_GigID" Association="Self.FK_CORE_Gigs_GigID">
+            <End Role="CORE_Gigs" EntitySet="CORE_Gigs" />
+            <End Role="CHLD_GigImages" EntitySet="CHLD_GigImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CORE_Students_StudentID" Association="Self.FK_CORE_Students_StudentID">
+            <End Role="CORE_Students" EntitySet="CORE_Students" />
+            <End Role="CHLD_StudentImages" EntitySet="CHLD_StudentImages" />
+          </AssociationSet>
           <AssociationSet Name="FK_CHLD_StudentLoans_CompanyID" Association="Self.FK_CHLD_StudentLoans_CompanyID">
             <End Role="SPRT_LoanCompanies" EntitySet="SPRT_LoanCompanies" />
             <End Role="CHLD_StudentLoans" EntitySet="CHLD_StudentLoans" />
@@ -733,7 +986,21 @@
             <End Role="SPRT_GigTypes" EntitySet="SPRT_GigTypes" />
             <End Role="CORE_Students" EntitySet="CORE_Students" />
           </AssociationSet>
-          <FunctionImport Name="sp_AddGigAlert">
+          <FunctionImport Name="proc_AddClient">
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Pass" Mode="In" Type="String" />
+            <Parameter Name="Gender" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_AddClientImage">
+            <Parameter Name="ClientID" Mode="In" Type="Int32" />
+            <Parameter Name="ImageURL" Mode="In" Type="String" />
+            <Parameter Name="ImageUUID" Mode="In" Type="String" />
+            <Parameter Name="ImageName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="proc_AddGigAlert">
             <Parameter Name="ClientID" Mode="In" Type="Int32" />
             <Parameter Name="TypeID" Mode="In" Type="Int32" />
             <Parameter Name="Title" Mode="In" Type="String" />
@@ -742,44 +1009,195 @@
             <Parameter Name="Long" Mode="In" Type="Double" />
             <Parameter Name="Lat" Mode="In" Type="Double" />
           </FunctionImport>
-          <FunctionImport Name="sp_GetGigTypes" ReturnType="Collection(DB_42039_gigaloanModel.sp_GetGigTypes_Result)" />
-          <FunctionImport Name="sp_GetGigTypesByID" ReturnType="Collection(DB_42039_gigaloanModel.sp_GetGigTypesByID_Result)">
+          <FunctionImport Name="PROC_AddGigImage">
+            <Parameter Name="GigID" Mode="In" Type="Int32" />
+            <Parameter Name="ImageURL" Mode="In" Type="String" />
+            <Parameter Name="ImageUUID" Mode="In" Type="String" />
+            <Parameter Name="ImageName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="proc_AddStudent">
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Pass" Mode="In" Type="String" />
+            <Parameter Name="MajorID" Mode="In" Type="Int32" />
+            <Parameter Name="CollegeID" Mode="In" Type="Int32" />
+            <Parameter Name="Gender" Mode="In" Type="String" />
+            <Parameter Name="Employed" Mode="In" Type="Boolean" />
+            <Parameter Name="Employer" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_AddStudentImage">
+            <Parameter Name="StudentID" Mode="In" Type="Int32" />
+            <Parameter Name="ImageURL" Mode="In" Type="String" />
+            <Parameter Name="ImageUUID" Mode="In" Type="String" />
+            <Parameter Name="ImageName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_GetClientImage" ReturnType="Collection(DB_42039_gigModel.PROC_GetClientImage_Result)">
+            <Parameter Name="ClientID" Mode="In" Type="Int32" />
+            <Parameter Name="ImageID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_GetClientImages" ReturnType="Collection(DB_42039_gigModel.PROC_GetClientImages_Result)">
+            <Parameter Name="ClientID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="proc_GetColleges" ReturnType="Collection(String)" />
+          <FunctionImport Name="PROC_GetGigImage" ReturnType="Collection(DB_42039_gigModel.PROC_GetGigImage_Result)">
+            <Parameter Name="GigID" Mode="In" Type="Int32" />
+            <Parameter Name="ImageID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_GetGigImages" ReturnType="Collection(DB_42039_gigModel.PROC_GetGigImages_Result)">
+            <Parameter Name="GigID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="proc_GetGigTypes" ReturnType="Collection(DB_42039_gigModel.proc_GetGigTypes_Result)" />
+          <FunctionImport Name="proc_GetGigTypesByID" ReturnType="Collection(DB_42039_gigModel.proc_GetGigTypesByID_Result)">
             <Parameter Name="TypeID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="proc_GetLoanCompanies" ReturnType="Collection(DB_42039_gigModel.proc_GetLoanCompanies_Result)" />
+          <FunctionImport Name="PROC_GetStudentImage" ReturnType="Collection(DB_42039_gigModel.PROC_GetStudentImage_Result)">
+            <Parameter Name="StudentID" Mode="In" Type="Int32" />
+            <Parameter Name="ImageID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_GetStudentImages" ReturnType="Collection(DB_42039_gigModel.PROC_GetStudentImages_Result)">
+            <Parameter Name="StudentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="proc_UpdateClient">
+            <Parameter Name="ClientID" Mode="In" Type="Int32" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Pass" Mode="In" Type="String" />
+            <Parameter Name="Gender" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="Active" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="proc_UpdateStudent">
+            <Parameter Name="StudentID" Mode="In" Type="Int32" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Pass" Mode="In" Type="String" />
+            <Parameter Name="MajorID" Mode="In" Type="Int32" />
+            <Parameter Name="CollegeID" Mode="In" Type="Int32" />
+            <Parameter Name="Gender" Mode="In" Type="String" />
+            <Parameter Name="Employed" Mode="In" Type="Boolean" />
+            <Parameter Name="Employer" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="Active" Mode="In" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="sp_GetGigTypes_Result">
+        <ComplexType Name="PROC_GetClientImage_Result">
+          <Property Type="Int32" Name="ImageID" Nullable="false" />
+          <Property Type="Int32" Name="ClientID" Nullable="false" />
+          <Property Type="String" Name="ImageURL" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="ImageUUID" Nullable="false" MaxLength="36" />
+          <Property Type="String" Name="ImageName" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="PROC_GetClientImages_Result">
+          <Property Type="Int32" Name="ImageID" Nullable="false" />
+          <Property Type="Int32" Name="ClientID" Nullable="false" />
+          <Property Type="String" Name="ImageURL" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="ImageUUID" Nullable="false" MaxLength="36" />
+          <Property Type="String" Name="ImageName" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="PROC_GetGigImage_Result">
+          <Property Type="Int32" Name="ImageID" Nullable="false" />
+          <Property Type="Int32" Name="GigID" Nullable="false" />
+          <Property Type="String" Name="ImageURL" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="ImageUUID" Nullable="false" MaxLength="36" />
+          <Property Type="String" Name="ImageName" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="PROC_GetGigImages_Result">
+          <Property Type="Int32" Name="ImageID" Nullable="false" />
+          <Property Type="Int32" Name="GigID" Nullable="false" />
+          <Property Type="String" Name="ImageURL" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="ImageUUID" Nullable="false" MaxLength="36" />
+          <Property Type="String" Name="ImageName" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="proc_GetGigTypes_Result">
           <Property Type="Int32" Name="typeid" Nullable="false" />
           <Property Type="String" Name="TypeName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Category" Nullable="false" MaxLength="50" />
         </ComplexType>
-        <ComplexType Name="sp_GetGigTypesByID_Result">
+        <ComplexType Name="proc_GetGigTypesByID_Result">
           <Property Type="Int32" Name="TypeID" Nullable="false" />
           <Property Type="String" Name="TypeName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Category" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="proc_GetLoanCompanies_Result">
+          <Property Type="String" Name="CompanyName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="CompanyState" Nullable="false" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="PROC_GetStudentImage_Result">
+          <Property Type="Int32" Name="ImageID" Nullable="false" />
+          <Property Type="Int32" Name="StudentID" Nullable="false" />
+          <Property Type="String" Name="ImageURL" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="ImageUUID" Nullable="false" MaxLength="36" />
+          <Property Type="String" Name="ImageName" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="PROC_GetStudentImages_Result">
+          <Property Type="Int32" Name="ImageID" Nullable="false" />
+          <Property Type="Int32" Name="StudentID" Nullable="false" />
+          <Property Type="String" Name="ImageURL" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="ImageUUID" Nullable="false" MaxLength="36" />
+          <Property Type="String" Name="ImageName" Nullable="false" MaxLength="255" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DB_42039_gigaloanModelStoreContainer" CdmEntityContainer="DB_42039_gigaloanEntities">
+        <EntityContainerMapping StorageEntityContainer="DB_42039_gigModelStoreContainer" CdmEntityContainer="DB_42039_gigEntities">
+          <EntitySetMapping Name="CHLD_ClientImages">
+            <EntityTypeMapping TypeName="DB_42039_gigModel.CHLD_ClientImages">
+              <MappingFragment StoreEntitySet="CHLD_ClientImages">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="ImageUUID" ColumnName="ImageUUID" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHLD_GigImages">
+            <EntityTypeMapping TypeName="DB_42039_gigModel.CHLD_GigImages">
+              <MappingFragment StoreEntitySet="CHLD_GigImages">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="GigID" ColumnName="GigID" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="ImageUUID" ColumnName="ImageUUID" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHLD_StudentImages">
+            <EntityTypeMapping TypeName="DB_42039_gigModel.CHLD_StudentImages">
+              <MappingFragment StoreEntitySet="CHLD_StudentImages">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="ImageUUID" ColumnName="ImageUUID" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CHLD_StudentLoans">
-            <EntityTypeMapping TypeName="DB_42039_gigaloanModel.CHLD_StudentLoans">
+            <EntityTypeMapping TypeName="DB_42039_gigModel.CHLD_StudentLoans">
               <MappingFragment StoreEntitySet="CHLD_StudentLoans">
                 <ScalarProperty Name="LoanID" ColumnName="LoanID" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-                <ScalarProperty Name="LoanState" ColumnName="LoanState" />
                 <ScalarProperty Name="LoanAmount" ColumnName="LoanAmount" />
+                <ScalarProperty Name="AccountNum" ColumnName="AccountNum" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CHLD_StudentReferences">
-            <EntityTypeMapping TypeName="DB_42039_gigaloanModel.CHLD_StudentReferences">
+            <EntityTypeMapping TypeName="DB_42039_gigModel.CHLD_StudentReferences">
               <MappingFragment StoreEntitySet="CHLD_StudentReferences">
                 <ScalarProperty Name="RefID" ColumnName="RefID" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -788,7 +1206,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CORE_Clients">
-            <EntityTypeMapping TypeName="DB_42039_gigaloanModel.CORE_Clients">
+            <EntityTypeMapping TypeName="DB_42039_gigModel.CORE_Clients">
               <MappingFragment StoreEntitySet="CORE_Clients">
                 <ScalarProperty Name="ClientID" ColumnName="ClientID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -803,7 +1221,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CORE_GigAlerts">
-            <EntityTypeMapping TypeName="DB_42039_gigaloanModel.CORE_GigAlerts">
+            <EntityTypeMapping TypeName="DB_42039_gigModel.CORE_GigAlerts">
               <MappingFragment StoreEntitySet="CORE_GigAlerts">
                 <ScalarProperty Name="AlertID" ColumnName="AlertID" />
                 <ScalarProperty Name="ClientID" ColumnName="ClientID" />
@@ -814,16 +1232,16 @@
                 <ScalarProperty Name="Long" ColumnName="Long" />
                 <ScalarProperty Name="Lat" ColumnName="Lat" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CORE_Gigs">
-            <EntityTypeMapping TypeName="DB_42039_gigaloanModel.CORE_Gigs">
+            <EntityTypeMapping TypeName="DB_42039_gigModel.CORE_Gigs">
               <MappingFragment StoreEntitySet="CORE_Gigs">
                 <ScalarProperty Name="GigID" ColumnName="GigID" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="AlertID" ColumnName="AlertID" />
-                <ScalarProperty Name="GigJob" ColumnName="GigJob" />
                 <ScalarProperty Name="DateAccepted" ColumnName="DateAccepted" />
                 <ScalarProperty Name="DateClosed" ColumnName="DateClosed" />
                 <ScalarProperty Name="StudentRating" ColumnName="StudentRating" />
@@ -834,7 +1252,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CORE_Students">
-            <EntityTypeMapping TypeName="DB_42039_gigaloanModel.CORE_Students">
+            <EntityTypeMapping TypeName="DB_42039_gigModel.CORE_Students">
               <MappingFragment StoreEntitySet="CORE_Students">
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -852,8 +1270,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="LOG_Events">
+            <EntityTypeMapping TypeName="DB_42039_gigModel.LOG_Events">
+              <MappingFragment StoreEntitySet="LOG_Events">
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="DateLogged" ColumnName="DateLogged" />
+                <ScalarProperty Name="LogMessage" ColumnName="LogMessage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="SPRT_Colleges">
-            <EntityTypeMapping TypeName="DB_42039_gigaloanModel.SPRT_Colleges">
+            <EntityTypeMapping TypeName="DB_42039_gigModel.SPRT_Colleges">
               <MappingFragment StoreEntitySet="SPRT_Colleges">
                 <ScalarProperty Name="CollegeID" ColumnName="CollegeID" />
                 <ScalarProperty Name="CollegeName" ColumnName="CollegeName" />
@@ -861,7 +1288,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SPRT_GigCategories">
-            <EntityTypeMapping TypeName="DB_42039_gigaloanModel.SPRT_GigCategories">
+            <EntityTypeMapping TypeName="DB_42039_gigModel.SPRT_GigCategories">
               <MappingFragment StoreEntitySet="SPRT_GigCategories">
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="Category" ColumnName="Category" />
@@ -869,7 +1296,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SPRT_GigTypes">
-            <EntityTypeMapping TypeName="DB_42039_gigaloanModel.SPRT_GigTypes">
+            <EntityTypeMapping TypeName="DB_42039_gigModel.SPRT_GigTypes">
               <MappingFragment StoreEntitySet="SPRT_GigTypes">
                 <ScalarProperty Name="TypeID" ColumnName="TypeID" />
                 <ScalarProperty Name="TypeName" ColumnName="TypeName" />
@@ -878,33 +1305,23 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SPRT_LoanCompanies">
-            <EntityTypeMapping TypeName="DB_42039_gigaloanModel.SPRT_LoanCompanies">
+            <EntityTypeMapping TypeName="DB_42039_gigModel.SPRT_LoanCompanies">
               <MappingFragment StoreEntitySet="SPRT_LoanCompanies">
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyState" ColumnName="CompanyState" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SPRT_Majors">
-            <EntityTypeMapping TypeName="DB_42039_gigaloanModel.SPRT_Majors">
+            <EntityTypeMapping TypeName="DB_42039_gigModel.SPRT_Majors">
               <MappingFragment StoreEntitySet="SPRT_Majors">
                 <ScalarProperty Name="MajorID" ColumnName="MajorID" />
                 <ScalarProperty Name="MajorName" ColumnName="MajorName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="DB_42039_gigaloanModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="CHLD_StudentSkills" TypeName="DB_42039_gigaloanModel.CHLD_StudentSkills" StoreEntitySet="CHLD_StudentSkills">
+          <AssociationSetMapping Name="CHLD_StudentSkills" TypeName="DB_42039_gigModel.CHLD_StudentSkills" StoreEntitySet="CHLD_StudentSkills">
             <EndProperty Name="SPRT_GigTypes">
               <ScalarProperty Name="TypeID" ColumnName="SkillID" />
             </EndProperty>
@@ -912,25 +1329,107 @@
               <ScalarProperty Name="StudentID" ColumnName="StudentID" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="sp_AddGigAlert" FunctionName="DB_42039_gigaloanModel.Store.sp_AddGigAlert" />
-          <FunctionImportMapping FunctionImportName="sp_GetGigTypes" FunctionName="DB_42039_gigaloanModel.Store.sp_GetGigTypes">
+          <FunctionImportMapping FunctionImportName="proc_AddClient" FunctionName="DB_42039_gigModel.Store.proc_AddClient" />
+          <FunctionImportMapping FunctionImportName="PROC_AddClientImage" FunctionName="DB_42039_gigModel.Store.PROC_AddClientImage" />
+          <FunctionImportMapping FunctionImportName="proc_AddGigAlert" FunctionName="DB_42039_gigModel.Store.proc_AddGigAlert" />
+          <FunctionImportMapping FunctionImportName="PROC_AddGigImage" FunctionName="DB_42039_gigModel.Store.PROC_AddGigImage" />
+          <FunctionImportMapping FunctionImportName="proc_AddStudent" FunctionName="DB_42039_gigModel.Store.proc_AddStudent" />
+          <FunctionImportMapping FunctionImportName="PROC_AddStudentImage" FunctionName="DB_42039_gigModel.Store.PROC_AddStudentImage" />
+          <FunctionImportMapping FunctionImportName="PROC_GetClientImage" FunctionName="DB_42039_gigModel.Store.PROC_GetClientImage">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DB_42039_gigaloanModel.sp_GetGigTypes_Result">
+              <ComplexTypeMapping TypeName="DB_42039_gigModel.PROC_GetClientImage_Result">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="ImageUUID" ColumnName="ImageUUID" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_GetClientImages" FunctionName="DB_42039_gigModel.Store.PROC_GetClientImages">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_42039_gigModel.PROC_GetClientImages_Result">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="ImageUUID" ColumnName="ImageUUID" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="proc_GetColleges" FunctionName="DB_42039_gigModel.Store.proc_GetColleges" />
+          <FunctionImportMapping FunctionImportName="PROC_GetGigImage" FunctionName="DB_42039_gigModel.Store.PROC_GetGigImage">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_42039_gigModel.PROC_GetGigImage_Result">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="GigID" ColumnName="GigID" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="ImageUUID" ColumnName="ImageUUID" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_GetGigImages" FunctionName="DB_42039_gigModel.Store.PROC_GetGigImages">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_42039_gigModel.PROC_GetGigImages_Result">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="GigID" ColumnName="GigID" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="ImageUUID" ColumnName="ImageUUID" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="proc_GetGigTypes" FunctionName="DB_42039_gigModel.Store.proc_GetGigTypes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_42039_gigModel.proc_GetGigTypes_Result">
                 <ScalarProperty Name="typeid" ColumnName="typeid" />
                 <ScalarProperty Name="TypeName" ColumnName="TypeName" />
                 <ScalarProperty Name="Category" ColumnName="Category" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_GetGigTypesByID" FunctionName="DB_42039_gigaloanModel.Store.sp_GetGigTypesByID">
+          <FunctionImportMapping FunctionImportName="proc_GetGigTypesByID" FunctionName="DB_42039_gigModel.Store.proc_GetGigTypesByID">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DB_42039_gigaloanModel.sp_GetGigTypesByID_Result">
+              <ComplexTypeMapping TypeName="DB_42039_gigModel.proc_GetGigTypesByID_Result">
                 <ScalarProperty Name="TypeID" ColumnName="TypeID" />
                 <ScalarProperty Name="TypeName" ColumnName="TypeName" />
                 <ScalarProperty Name="Category" ColumnName="Category" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="proc_GetLoanCompanies" FunctionName="DB_42039_gigModel.Store.proc_GetLoanCompanies">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_42039_gigModel.proc_GetLoanCompanies_Result">
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyState" ColumnName="CompanyState" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_GetStudentImage" FunctionName="DB_42039_gigModel.Store.PROC_GetStudentImage">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_42039_gigModel.PROC_GetStudentImage_Result">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="ImageUUID" ColumnName="ImageUUID" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_GetStudentImages" FunctionName="DB_42039_gigModel.Store.PROC_GetStudentImages">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_42039_gigModel.PROC_GetStudentImages_Result">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="ImageUUID" ColumnName="ImageUUID" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="proc_UpdateClient" FunctionName="DB_42039_gigModel.Store.proc_UpdateClient" />
+          <FunctionImportMapping FunctionImportName="proc_UpdateStudent" FunctionName="DB_42039_gigModel.Store.proc_UpdateStudent" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

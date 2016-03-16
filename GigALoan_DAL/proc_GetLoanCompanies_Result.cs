@@ -10,17 +10,10 @@
 namespace GigALoan_DAL
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class CHLD_StudentLoans
+    public partial class proc_GetLoanCompanies_Result
     {
-        public int LoanID { get; set; }
-        public int StudentID { get; set; }
-        public int CompanyID { get; set; }
-        public Nullable<double> LoanAmount { get; set; }
-        public string AccountNum { get; set; }
-    
-        public virtual SPRT_LoanCompanies SPRT_LoanCompanies { get; set; }
-        public virtual CORE_Students CORE_Students { get; set; }
+        public string CompanyName { get; set; }
+        public string CompanyState { get; set; }
     }
 }

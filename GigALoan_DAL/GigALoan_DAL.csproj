@@ -48,6 +48,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CHLD_ClientImages.cs">
+      <DependentUpon>GigALoan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CHLD_GigImages.cs">
+      <DependentUpon>GigALoan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CHLD_StudentImages.cs">
+      <DependentUpon>GigALoan.tt</DependentUpon>
+    </Compile>
     <Compile Include="CHLD_StudentLoans.cs">
       <DependentUpon>GigALoan.tt</DependentUpon>
     </Compile>
@@ -82,6 +91,36 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GigALoan.edmx</DependentUpon>
     </Compile>
+    <Compile Include="LOG_Events.cs">
+      <DependentUpon>GigALoan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROC_GetClientImages_Result.cs">
+      <DependentUpon>GigALoan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROC_GetClientImage_Result.cs">
+      <DependentUpon>GigALoan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROC_GetGigImages_Result.cs">
+      <DependentUpon>GigALoan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROC_GetGigImage_Result.cs">
+      <DependentUpon>GigALoan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proc_GetGigTypesByID_Result.cs">
+      <DependentUpon>GigALoan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proc_GetGigTypes_Result.cs">
+      <DependentUpon>GigALoan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proc_GetLoanCompanies_Result.cs">
+      <DependentUpon>GigALoan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROC_GetStudentImages_Result.cs">
+      <DependentUpon>GigALoan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROC_GetStudentImage_Result.cs">
+      <DependentUpon>GigALoan.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SPRT_Colleges.cs">
       <DependentUpon>GigALoan.tt</DependentUpon>
@@ -98,15 +137,6 @@
     <Compile Include="SPRT_Majors.cs">
       <DependentUpon>GigALoan.tt</DependentUpon>
     </Compile>
-    <Compile Include="sp_GetGigTypesByID_Result.cs">
-      <DependentUpon>GigALoan.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_GetGigTypes_Result.cs">
-      <DependentUpon>GigALoan.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>GigALoan.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -120,6 +150,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="GigALoan.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GigALoan.edmx</DependentUpon>
@@ -130,9 +163,6 @@
       <DependentUpon>GigALoan.edmx</DependentUpon>
       <LastGenOutput>GigALoan.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

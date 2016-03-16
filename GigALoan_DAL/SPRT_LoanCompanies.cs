@@ -21,6 +21,7 @@ namespace GigALoan_DAL
     
         public int CompanyID { get; set; }
         public string CompanyName { get; set; }
+        public string CompanyState { get; set; }
     
         public virtual ICollection<CHLD_StudentLoans> CHLD_StudentLoans { get; set; }
     }

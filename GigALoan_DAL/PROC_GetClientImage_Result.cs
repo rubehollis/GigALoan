@@ -11,10 +11,12 @@ namespace GigALoan_DAL
 {
     using System;
     
-    public partial class sp_GetGigTypesByID_Result
+    public partial class PROC_GetClientImage_Result
     {
-        public int TypeID { get; set; }
-        public string TypeName { get; set; }
-        public string Category { get; set; }
+        public int ImageID { get; set; }
+        public int ClientID { get; set; }
+        public string ImageURL { get; set; }
+        public string ImageUUID { get; set; }
+        public string ImageName { get; set; }
     }
 }

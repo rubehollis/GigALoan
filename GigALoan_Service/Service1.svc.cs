@@ -20,7 +20,7 @@ namespace GigALoan_Service
 
         public string GetFirstCollege()
         {
-            using (GigALoan_DAL.DB_42039_gigaloanEntities context = new GigALoan_DAL.DB_42039_gigaloanEntities())
+            using (GigALoan_DAL.DB_42039_gigEntities context = new GigALoan_DAL.DB_42039_gigEntities())
             {
                 var college = context.SPRT_Colleges.First();
 
@@ -31,7 +31,7 @@ namespace GigALoan_Service
         public List<DTO_College> GetColleges()
         {
             List<DTO_College> returnList = new List<DTO_College>();
-            using(GigALoan_DAL.DB_42039_gigaloanEntities context = new GigALoan_DAL.DB_42039_gigaloanEntities())
+            using(GigALoan_DAL.DB_42039_gigEntities context = new GigALoan_DAL.DB_42039_gigEntities())
             {
                 var list = context.SPRT_Colleges.Take(10).ToList();
 

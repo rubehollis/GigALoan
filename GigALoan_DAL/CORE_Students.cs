@@ -16,6 +16,7 @@ namespace GigALoan_DAL
     {
         public CORE_Students()
         {
+            this.CHLD_StudentImages = new HashSet<CHLD_StudentImages>();
             this.CHLD_StudentLoans = new HashSet<CHLD_StudentLoans>();
             this.CHLD_StudentReferences = new HashSet<CHLD_StudentReferences>();
             this.CORE_Gigs = new HashSet<CORE_Gigs>();
@@ -36,6 +37,7 @@ namespace GigALoan_DAL
         public string PhoneNumber { get; set; }
         public Nullable<bool> Active { get; set; }
     
+        public virtual ICollection<CHLD_StudentImages> CHLD_StudentImages { get; set; }
         public virtual ICollection<CHLD_StudentLoans> CHLD_StudentLoans { get; set; }
         public virtual ICollection<CHLD_StudentReferences> CHLD_StudentReferences { get; set; }
         public virtual ICollection<CORE_Gigs> CORE_Gigs { get; set; }
